@@ -5,6 +5,8 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
+    // Base path for deployment to GitHub Pages.
+    base: '/portfolio-template/',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
