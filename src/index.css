@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+:root {
+  --color-bg-base: #f8fafc;
+  --color-bg-surface: #ffffff;
+  --color-bg-subtle: #f1f5f9;
+  --color-bg-accent-light: #eff6ff;
+
+  --color-text-main: #0f172a;
+  --color-text-muted: #334155;
+  --color-text-light: #64748b;
+  
+  --color-primary: #1d4ed8;
+  --color-primary-hover: #1e40af;
+  --color-primary-focus: #0284c7;
+  
+  --color-border-subtle: #e2e8f0;
+  --color-border-card: #cbd5e1;
+  
+  --color-tag-bg: #e0f2fe;
+  --color-tag-text: #0369a1;
+
+  --header-bg: rgba(255, 255, 255, 0.95);
+
+  --font-family-base: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-code: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.08);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 10px 25px -3px rgba(15, 23, 42, 0.1), 0 4px 6px -2px rgba(15, 23, 42, 0.05);
+}
+
+[data-theme="dark"] {
+  --color-bg-base: #0b1120;
+  --color-bg-surface: #1e293b;
+  --color-bg-subtle: #162032;
+  --color-bg-accent-light: rgba(30, 58, 138, 0.35);
+
+  --color-text-main: #f1f5f9;
+  --color-text-muted: #cbd5e1;
+  --color-text-light: #94a3b8;
+
+  --color-primary: #3b82f6;
+  --color-primary-hover: #60a5fa;
+  --color-primary-focus: #38bdf8;
+
+  --color-border-subtle: #334155;
+  --color-border-card: #475569;
+
+  --color-tag-bg: #0c4a6e;
+  --color-tag-text: #7dd3fc;
+
+  --header-bg: rgba(15, 23, 42, 0.95);
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.6);
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-family-base);
+}
+
+body {
+  font-family: var(--font-family-base);
+  background-color: var(--color-bg-base);
+  color: var(--color-text-main);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Accessible focus outline */
+*:focus-visible {
+  outline: 3px solid var(--color-primary-focus);
+  outline-offset: 2px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-base);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-card);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-light);
+}

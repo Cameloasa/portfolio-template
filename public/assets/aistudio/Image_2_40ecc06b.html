@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Alex Rivera | IT Student &amp; Software Engineering Portfolio</title>
+<style>
+    /* ==========================================================================
+       CSS Custom Properties / Design Tokens (:root)
+       Structured for maintainability, WCAG AA contrast compliance, and scalability
+       ========================================================================== */
+    :root {
+      /* Color Palette: Light background, deep dark navy text, cobalt & cyan accents */
+      --color-bg-base: #f8fafc;
+      --color-bg-surface: #ffffff;
+      --color-bg-subtle: #f1f5f9;
+      --color-bg-accent-light: #eff6ff;
+
+      --color-text-main: #0f172a;       /* Dark navy text, 14.2:1 contrast ratio against white */
+      --color-text-muted: #334155;      /* Slate navy text, 7.8:1 contrast ratio against white */
+      --color-text-light: #64748b;      /* Subtle annotations (min 4.5:1 on light) */
+      
+      --color-primary: #1d4ed8;         /* Accessible blue accent (4.8:1 against white) */
+      --color-primary-hover: #1e40af;   /* Darker hover state */
+      --color-primary-focus: #0284c7;   /* Cyan-tinted focus highlight */
+      
+      --color-border-subtle: #e2e8f0;
+      --color-border-card: #cbd5e1;
+      
+      --color-tag-bg: #e0f2fe;
+      --color-tag-text: #0369a1;
+
+      /* Header specific */
+      --header-bg: #ffffff;
+
+      /* Typography Scale */
+      --font-family-base: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      --font-family-code: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      
+      --font-size-xs: 0.8125rem;  /* 13px */
+      --font-size-sm: 0.9375rem;  /* 15px */
+      --font-size-base: 1.0625rem;/* 17px base for optimal legibility */
+      --font-size-md: 1.25rem;    /* 20px */
+      --font-size-lg: 1.5rem;     /* 24px */
+      --font-size-xl: 2rem;       /* 32px */
+      --font-size-2xl: 2.75rem;   /* 44px */
+
+      --line-height-tight: 1.25;
+      --line-height-normal: 1.6;
+
+      /* Spacing Rhythm */
+      --space-2xs: 0.25rem;
+      --space-xs: 0.5rem;
+      --space-sm: 0.75rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-2xl: 3rem;
+      --space-3xl: 4.5rem;
+
+      /* Elevation and Borders */
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+      --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.08);
+      --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.04);
+      --shadow-lg: 0 10px 25px -3px rgba(15, 23, 42, 0.1), 0 4px 6px -2px rgba(15, 23, 42, 0.05);
+
+      --max-width-site: 1140px;
+    }
+
+    /* Dark Mode Theme Tokens */
+    [data-theme="dark"] {
+      --color-bg-base: #0b1120;
+      --color-bg-surface: #1e293b;
+      --color-bg-subtle: #162032;
+      --color-bg-accent-light: #1e3a8a33;
+
+      --color-text-main: #f1f5f9;
+      --color-text-muted: #cbd5e1;
+      --color-text-light: #94a3b8;
+
+      --color-primary: #3b82f6;
+      --color-primary-hover: #60a5fa;
+      --color-primary-focus: #38bdf8;
+
+      --color-border-subtle: #334155;
+      --color-border-card: #475569;
+
+      --color-tag-bg: #0c4a6e;
+      --color-tag-text: #7dd3fc;
+
+      --header-bg: #0f172a;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.5);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --color-bg-base: #0b1120;
+        --color-bg-surface: #1e293b;
+        --color-bg-subtle: #162032;
+        --color-bg-accent-light: #1e3a8a33;
+
+        --color-text-main: #f1f5f9;
+        --color-text-muted: #cbd5e1;
+        --color-text-light: #94a3b8;
+
+        --color-primary: #3b82f6;
+        --color-primary-hover: #60a5fa;
+        --color-primary-focus: #38bdf8;
+
+        --color-border-subtle: #334155;
+        --color-border-card: #475569;
+
+        --color-tag-bg: #0c4a6e;
+        --color-tag-text: #7dd3fc;
+
+        --header-bg: #0f172a;
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+        --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.5);
+      }
+    }
+
+    /* CSS Reset & Global Semantics */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 100%;
+    }
+
+    body {
+      font-family: var(--font-family-base);
+      font-size: var(--font-size-base);
+      line-height: var(--line-height-normal);
+      color: var(--color-text-main);
+      background-color: var(--color-bg-base);
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Global Smooth Theme Transitions */
+    body, header, footer, nav, aside, article, section, input, select, textarea, button, .card, .skill-card, .project-card, .badge, .tag, .theme-toggle, a, .about-card, .complementary-sidebar, .contact-form-card, .contact-method-item, .notice-box, .highlight-item, .skill-pill, .project-tag, .hero-eyebrow, .category-icon {
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, fill 0.3s ease;
+    }
+
+    /* Accessibility: Skip to Content Link */
+    .skip-link {
+      position: absolute;
+      top: -9999px;
+      left: 1rem;
+      background: var(--color-primary);
+      color: #ffffff;
+      padding: var(--space-sm) var(--space-md);
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      z-index: 1000;
+      text-decoration: none;
+    }
+
+    .skip-link:focus {
+      top: 1rem;
+      outline: 3px solid var(--color-primary-focus);
+      outline-offset: 2px;
+    }
+
+    /* Universal Focus Styling for WCAG 2.2 AA Keyboard Navigation */
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible {
+      outline: 3px solid var(--color-primary-focus);
+      outline-offset: 2px;
+    }
+
+    /* Typography Hierarchy: h1, h2, h3 */
+    h1, h2, h3 {
+      color: var(--color-text-main);
+      line-height: var(--line-height-tight);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    h1 {
+      font-size: var(--font-size-2xl);
+      margin-bottom: var(--space-md);
+    }
+
+    h2 {
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--space-lg);
+      position: relative;
+    }
+
+    h3 {
+      font-size: var(--font-size-md);
+      margin-bottom: var(--space-xs);
+    }
+
+    p {
+      margin-bottom: var(--space-md);
+      color: var(--color-text-muted);
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Container Utility */
+    .container {
+      width: 100%;
+      max-width: var(--max-width-site);
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: var(--space-lg);
+      padding-right: var(--space-lg);
+    }
+
+    /* ==========================================================================
+       Header & Navigation
+       ========================================================================== */
+    .site-header {
+      background-color: var(--header-bg);
+      border-bottom: 1px solid var(--color-border-subtle);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .site-header .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 4.5rem;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      text-decoration: none;
+      color: var(--color-text-main);
+      font-weight: 700;
+      font-size: 1.15rem;
+    }
+
+    .brand-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      background: var(--color-primary);
+      color: #ffffff;
+      border-radius: var(--radius-md);
+      font-family: var(--font-family-code);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .nav-list {
+      display: flex;
+      list-style: none;
+      gap: var(--space-xs);
+      align-items: center;
+    }
+
+    .nav-link {
+      display: inline-block;
+      text-decoration: none;
+      color: var(--color-text-muted);
+      font-weight: 500;
+      font-size: var(--font-size-sm);
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius-sm);
+      transition: color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--color-primary);
+      background-color: var(--color-bg-subtle);
+    }
+
+    .nav-link[aria-current="page"] {
+      color: var(--color-primary);
+      font-weight: 600;
+      background-color: var(--color-bg-accent-light);
+    }
+
+    /* Dark Mode Toggle Button */
+    .theme-toggle {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      padding: 0;
+      border: 1px solid var(--color-border-card);
+      background-color: var(--color-bg-surface);
+      color: var(--color-text-main);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      overflow: hidden;
+      transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .theme-toggle:hover {
+      background-color: var(--color-bg-subtle);
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      transform: scale(1.05);
+    }
+
+    .theme-toggle:active {
+      transform: scale(0.95);
+    }
+
+    .theme-toggle svg {
+      width: 1.25rem;
+      height: 1.25rem;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      position: absolute;
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+    }
+
+    /* Icon visibility and transition dynamics */
+    .icon-sun {
+      opacity: 0;
+      transform: rotate(90deg) scale(0.6);
+      pointer-events: none;
+    }
+    .icon-moon {
+      opacity: 1;
+      transform: rotate(0deg) scale(1);
+    }
+
+    [data-theme="dark"] .icon-sun {
+      opacity: 1;
+      transform: rotate(0deg) scale(1);
+      pointer-events: auto;
+    }
+    [data-theme="dark"] .icon-moon {
+      opacity: 0;
+      transform: rotate(-90deg) scale(0.6);
+      pointer-events: none;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .icon-sun {
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+        pointer-events: auto;
+      }
+      :root:not([data-theme="light"]) .icon-moon {
+        opacity: 0;
+        transform: rotate(-90deg) scale(0.6);
+        pointer-events: none;
+      }
+    }
+
+    /* ==========================================================================
+       Hero Section
+       ========================================================================== */
+    .hero-section {
+      background: linear-gradient(180deg, var(--color-bg-surface) 0%, var(--color-bg-base) 100%);
+      padding: var(--space-3xl) 0 var(--space-2xl) 0;
+      border-bottom: 1px solid var(--color-border-subtle);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      align-items: center;
+      gap: var(--space-2xl);
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background-color: var(--color-tag-bg);
+      color: var(--color-tag-text);
+      font-size: var(--font-size-xs);
+      font-weight: 600;
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius-full);
+      margin-bottom: var(--space-md);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .hero-eyebrow .status-dot {
+      width: 8px;
+      height: 8px;
+      background-color: #0284c7;
+      border-radius: 50%;
+    }
+
+    .hero-description {
+      font-size: 1.15rem;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-xl);
+      max-width: 58ch;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.5rem;
+      font-size: var(--font-size-base);
+      font-weight: 600;
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.1s ease, color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-primary {
+      background-color: var(--color-primary);
+      color: #ffffff;
+      box-shadow: 0 2px 4px rgba(29, 78, 216, 0.2);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--color-primary-hover);
+    }
+
+    .btn-secondary {
+      background-color: var(--color-bg-surface);
+      color: var(--color-text-main);
+      border-color: var(--color-border-card);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--color-bg-subtle);
+      border-color: var(--color-text-muted);
+    }
+
+    .hero-image-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+
+    .hero-avatar {
+      width: 100%;
+      max-width: 320px;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+      border: 4px solid var(--color-bg-surface);
+      box-shadow: var(--shadow-lg);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    /* ==========================================================================
+       Main Content Layout: About + Aside
+       ========================================================================== */
+    .section-padding {
+      padding: var(--space-3xl) 0;
+    }
+
+    .about-layout {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: var(--space-2xl);
+      align-items: start;
+    }
+
+    .about-card {
+      background: var(--color-bg-surface);
+      padding: var(--space-xl);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border-subtle);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .academic-highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+      padding-top: var(--space-lg);
+      border-top: 1px solid var(--color-border-subtle);
+    }
+
+    .highlight-item {
+      background: var(--color-bg-subtle);
+      padding: var(--space-md);
+      border-radius: var(--radius-sm);
+      border-left: 3px solid var(--color-primary);
+    }
+
+    .highlight-label {
+      font-size: var(--font-size-xs);
+      font-weight: 600;
+      color: var(--color-text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-2xs);
+    }
+
+    .highlight-value {
+      font-weight: 700;
+      color: var(--color-text-main);
+      font-size: var(--font-size-sm);
+    }
+
+    /* Supplementary Aside Landmark */
+    .complementary-sidebar {
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border-card);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .aside-block {
+      margin-bottom: var(--space-lg);
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .aside-block:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .aside-badge-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      margin-top: var(--space-xs);
+    }
+
+    .aside-badge-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+    }
+
+    .aside-badge-item::before {
+      content: "•";
+      color: var(--color-primary);
+      font-weight: bold;
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+
+    /* ==========================================================================
+       Skills Section
+       ========================================================================== */
+    .skills-section {
+      background-color: var(--color-bg-surface);
+      border-top: 1px solid var(--color-border-subtle);
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: var(--space-xl);
+    }
+
+    .skill-card {
+      background: var(--color-bg-base);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .skill-category-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-sm);
+    }
+
+    .category-icon {
+      width: 2rem;
+      height: 2rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-tag-bg);
+      color: var(--color-tag-text);
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .skill-pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      list-style: none;
+      margin-top: auto;
+      padding-top: var(--space-md);
+    }
+
+    .skill-pill {
+      background: var(--color-bg-surface);
+      color: var(--color-text-muted);
+      border: 1px solid var(--color-border-card);
+      font-size: var(--font-size-xs);
+      font-weight: 600;
+      padding: 0.35rem 0.65rem;
+      border-radius: var(--radius-sm);
+    }
+
+    /* ==========================================================================
+       Projects Section
+       ========================================================================== */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: var(--space-xl);
+    }
+
+    .project-card {
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--color-border-card);
+    }
+
+    .project-image-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background-color: var(--color-bg-subtle);
+      overflow: hidden;
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .project-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover .project-image {
+      transform: scale(1.02);
+    }
+
+    .project-content {
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      list-style: none;
+      margin-bottom: var(--space-sm);
+    }
+
+    .project-tag {
+      font-size: var(--font-size-xs);
+      font-family: var(--font-family-code);
+      background-color: var(--color-bg-accent-light);
+      color: var(--color-primary);
+      padding: 0.2rem 0.5rem;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+    }
+
+    .project-description {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-lg);
+      flex-grow: 1;
+    }
+
+    .project-links {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding-top: var(--space-md);
+      border-top: 1px solid var(--color-border-subtle);
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      text-decoration: none;
+      font-size: var(--font-size-sm);
+      font-weight: 600;
+      color: var(--color-primary);
+      padding: var(--space-2xs) var(--space-xs);
+      border-radius: var(--radius-sm);
+    }
+
+    .project-link:hover {
+      color: var(--color-primary-hover);
+      text-decoration: underline;
+    }
+
+    /* ==========================================================================
+       Contact Section & Form
+       ========================================================================== */
+    .contact-section {
+      background-color: var(--color-bg-surface);
+      border-top: 1px solid var(--color-border-subtle);
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: var(--space-2xl);
+    }
+
+    .contact-info-panel {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+
+    .contact-method-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .contact-method-item {
+      display: flex;
+      flex-direction: column;
+      padding: var(--space-md);
+      background: var(--color-bg-base);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border-subtle);
+    }
+
+    .contact-label {
+      font-size: var(--font-size-xs);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-light);
+      margin-bottom: var(--space-2xs);
+    }
+
+    .contact-value {
+      font-weight: 600;
+      color: var(--color-primary);
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    .contact-value:hover {
+      text-decoration: underline;
+    }
+
+    /* Accessible Form Styles */
+    .contact-form-card {
+      background: var(--color-bg-base);
+      padding: var(--space-xl);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border-card);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .form-instruction {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-lg);
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .required-marker {
+      color: #ef4444; /* High contrast red */
+      font-weight: 700;
+      margin-left: 2px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: var(--space-md);
+    }
+
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: var(--font-size-sm);
+      font-weight: 600;
+      color: var(--color-text-main);
+      margin-bottom: var(--space-xs);
+    }
+
+    .field-hint {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-light);
+      margin-top: var(--space-2xs);
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="url"],
+    input[type="tel"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 0.75rem 0.875rem;
+      font-family: inherit;
+      font-size: var(--font-size-base);
+      color: var(--color-text-main);
+      background-color: var(--color-bg-surface);
+      border: 1px solid var(--color-border-card);
+      border-radius: var(--radius-sm);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    }
+
+    input[type="text"]:hover,
+    input[type="email"]:hover,
+    input[type="url"]:hover,
+    input[type="tel"]:hover,
+    select:hover,
+    textarea:hover {
+      border-color: var(--color-text-muted);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .checkbox-container {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      margin: var(--space-md) 0 var(--space-lg) 0;
+    }
+
+    .checkbox-container input[type="checkbox"] {
+      width: 1.25rem;
+      height: 1.25rem;
+      accent-color: var(--color-primary);
+      margin-top: 0.2rem;
+      cursor: pointer;
+    }
+
+    .checkbox-label {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+      font-weight: 400;
+      line-height: 1.4;
+      cursor: pointer;
+    }
+
+    .notice-box {
+      background-color: var(--color-bg-accent-light);
+      border-left: 4px solid var(--color-primary);
+      padding: var(--space-sm) var(--space-md);
+      font-size: var(--font-size-xs);
+      color: var(--color-tag-text);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-bottom: var(--space-lg);
+    }
+
+    /* ==========================================================================
+       Footer Landmark
+       ========================================================================== */
+    .site-footer {
+      background-color: #0b1329; /* Darkest navy footer */
+      color: #94a3b8;
+      padding: var(--space-2xl) 0 var(--space-xl) 0;
+      margin-top: auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: var(--space-2xl);
+      padding-bottom: var(--space-2xl);
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .footer-brand-title {
+      color: #ffffff;
+      font-size: 1.15rem;
+      margin-bottom: var(--space-xs);
+    }
+
+    .footer-desc {
+      color: #94a3b8;
+      font-size: var(--font-size-sm);
+      max-width: 40ch;
+    }
+
+    .footer-heading {
+      color: #f1f5f9;
+      font-size: var(--font-size-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-md);
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .footer-link {
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: var(--font-size-sm);
+      transition: color 0.15s ease;
+    }
+
+    .footer-link:hover {
+      color: #38bdf8;
+      text-decoration: underline;
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+      padding-top: var(--space-lg);
+      font-size: var(--font-size-xs);
+      color: #64748b;
+    }
+
+    .external-badge {
+      display: inline-block;
+      font-size: 0.75em;
+      vertical-align: super;
+      margin-left: 2px;
+    }
+
+    /* ==========================================================================
+       Responsive Media Queries (Pure CSS3, Mobile-First / Progressive Enhancement)
+       ========================================================================== */
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: var(--space-xl);
+      }
+
+      .hero-eyebrow {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-description {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-actions {
+        justify-content: center;
+      }
+
+      .hero-image-wrapper {
+        order: -1;
+      }
+
+      .hero-avatar {
+        max-width: 220px;
+      }
+
+      .about-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+      }
+    }
+
+    @media (max-width: 640px) {
+      :root {
+        --font-size-2xl: 2.15rem;
+        --font-size-xl: 1.65rem;
+      }
+
+      .site-header .header-inner {
+        flex-direction: column;
+        padding-top: var(--space-sm);
+        padding-bottom: var(--space-sm);
+        gap: var(--space-sm);
+      }
+
+      .site-nav {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .nav-list {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .project-links {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    /* Accessibility: Respect Reduced Motion Preferences */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+<!-- Accessible Skip Navigation Link for WCAG Keyboard Navigation -->
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<!-- ========================================================================
+       Header & Global Navigation (Semantic <header> & <nav>)
+       ======================================================================== -->
+<header class="site-header">
+<div class="container header-inner">
+<a aria-label="Alex Rivera Portfolio Home" class="brand-logo" href="#home">
+<span aria-hidden="true" class="brand-badge">&lt;/&gt;</span>
+<span>Alex Rivera</span>
+</a>
+<nav aria-label="Primary portfolio navigation" class="site-nav">
+<ul class="nav-list">
+<li><a aria-current="page" class="nav-link" href="#home">Home</a></li>
+<li><a class="nav-link" href="#about">About</a></li>
+<li><a class="nav-link" href="#skills">Skills</a></li>
+<li><a class="nav-link" href="#projects">Projects</a></li>
+<li><a class="nav-link" href="#contact">Contact</a></li>
+</ul>
+<button aria-label="Toggle dark mode" aria-pressed="false" class="theme-toggle" id="theme-toggle" type="button">
+<!-- Sun Icon (shown in dark mode) -->
+<svg aria-hidden="true" class="icon-sun" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="5"></circle>
+<line x1="12" x2="12" y1="1" y2="3"></line>
+<line x1="12" x2="12" y1="21" y2="23"></line>
+<line x1="4.22" x2="5.64" y1="4.22" y2="5.64"></line>
+<line x1="18.36" x2="19.78" y1="18.36" y2="19.78"></line>
+<line x1="1" x2="3" y1="12" y2="12"></line>
+<line x1="21" x2="23" y1="12" y2="12"></line>
+<line x1="4.22" x2="5.64" y1="19.78" y2="18.36"></line>
+<line x1="18.36" x2="19.78" y1="5.64" y2="4.22"></line>
+</svg>
+<!-- Moon Icon (shown in light mode) -->
+<svg aria-hidden="true" class="icon-moon" viewbox="0 0 24 24">
+<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+</svg>
+</button>
+</nav>
+</div>
+</header>
+<!-- ========================================================================
+       Main Landmark Content (<main id="main-content">)
+       ======================================================================== -->
+<main id="main-content">
+<!-- Section 1: Hero Section with single <h1> and direct CTA -->
+<section aria-labelledby="hero-title" class="hero-section" id="home">
+<div class="container hero-grid">
+<div class="hero-content">
+<div class="hero-eyebrow">
+<span aria-hidden="true" class="status-dot"></span>
+<span>B.S. Information Technology • Class of 2025</span>
+</div>
+<h1 id="hero-title">Building resilient web software, test pipelines, and cloud systems.</h1>
+<p class="hero-description">
+            Hello! I am Alex Rivera, a 3rd-year undergraduate IT student specializing in modern web development, automated quality assurance testing, and cloud infrastructure deployment.
+          </p>
+<div class="hero-actions">
+<a class="btn btn-primary" href="#projects">View Featured Projects</a>
+<a class="btn btn-secondary" href="#contact">Get in Touch</a>
+</div>
+</div>
+<div class="hero-image-wrapper">
+<img alt="Portrait of Alex Rivera, IT Computer Science student, smiling in a modern university lab" class="hero-avatar" height="320" src="https://lh3.googleusercontent.com/aida/AEtjO1Wr9Pfp_WyCq_XGb4KfDimQrLJhBRTbSP-91kKleY31akTVEZixraR3o2hQLf4BqjQSrpo9eEyxYplINWxADWrHqnAx59w-He81fEKDMszjGJMPWR_FsfYh8srnZ1bUy3DY_tYncqL5bnC5cXcRApobovTeUEfThTMnanKB5OMMFHbVR0BVKRCsnHFpG9zGexd8JPXb-WwtkvhFIqx_jbEw1wphYi7Y27Y4h8CrK3tBSjGmG95HshIqiGs" width="320"/>
+</div>
+</div>
+</section>
+<!-- Section 2: About Section & Semantic Supplementary <aside> -->
+<section aria-labelledby="about-heading" class="section-padding" id="about">
+<div class="container">
+<div class="about-layout">
+<!-- Primary About Content -->
+<article class="about-card">
+<h2 id="about-heading">About Me &amp; Professional Path</h2>
+<p>
+              I am an undergraduate student pursuing a Bachelor of Science in Information Technology with an emphasis on Systems Architecture and Software Engineering. My academic journey combines hands-on engineering with rigorous computer science fundamentals, focusing on test-driven development, semantic accessibility, and distributed architectures.
+            </p>
+<p>
+              Beyond the classroom, I serve as a student mentor in the Department of Computer Science and contribute to open-source developer tooling. My goal upon graduation is to join an engineering team as an Associate Software Engineer or Cloud QA Automation Specialist.
+            </p>
+<div class="academic-highlights">
+<div class="highlight-item">
+<div class="highlight-label">Degree Target</div>
+<div class="highlight-value">B.S. Information Technology</div>
+</div>
+<div class="highlight-item">
+<div class="highlight-label">Cumulative GPA</div>
+<div class="highlight-value">3.91 / 4.00 (Dean's Honor List)</div>
+</div>
+<div class="highlight-item">
+<div class="highlight-label">University Department</div>
+<div class="highlight-value">College of Engineering &amp; Computing</div>
+</div>
+</div>
+</article>
+<!-- Semantic Supplementary <aside> Landmark -->
+<aside aria-labelledby="aside-heading" class="complementary-sidebar">
+<h3 id="aside-heading">Current Learning Focus</h3>
+<p class="field-hint" style="margin-bottom: var(--space-md);">Supplementary technical pursuits and coursework active this semester.</p>
+<div class="aside-block">
+<h4 style="font-size: 0.95rem; color: var(--color-text-main); margin-bottom: var(--space-2xs);">Current Courses</h4>
+<ul class="aside-badge-list">
+<li class="aside-badge-item">IT 410: Distributed Web Systems</li>
+<li class="aside-badge-item">CS 375: Software Verification &amp; QA</li>
+<li class="aside-badge-item">IT 330: Cloud Infrastructure &amp; Security</li>
+</ul>
+</div>
+<div class="aside-block">
+<h4 style="font-size: 0.95rem; color: var(--color-text-main); margin-bottom: var(--space-2xs);">Technologies Under Study</h4>
+<ul class="aside-badge-list">
+<li class="aside-badge-item">Kubernetes &amp; Helm Charts</li>
+<li class="aside-badge-item">Playwright End-to-End Testing</li>
+<li class="aside-badge-item">WCAG 2.2 AA Auditing &amp; ARIA</li>
+</ul>
+</div>
+<div class="aside-block">
+<h4 style="font-size: 0.95rem; color: var(--color-text-main); margin-bottom: var(--space-2xs);">Certifications in Progress</h4>
+<ul class="aside-badge-list">
+<li class="aside-badge-item">AWS Certified Cloud Practitioner</li>
+<li class="aside-badge-item">HashiCorp Terraform Associate</li>
+</ul>
+</div>
+</aside>
+</div>
+</div>
+</section>
+<!-- Section 3: Technical Skills Section -->
+<section aria-labelledby="skills-heading" class="section-padding skills-section" id="skills">
+<div class="container">
+<h2 id="skills-heading">Technical Skills &amp; Competencies</h2>
+<p style="max-width: 65ch; margin-bottom: var(--space-xl);">
+          Categorized technical toolset acquired through coursework, independent research, and production-grade laboratory projects.
+        </p>
+<div class="skills-grid">
+<div class="skill-card">
+<div class="skill-category-header">
+<span aria-hidden="true" class="category-icon">&lt;/&gt;</span>
+<h3>Web &amp; Frontend Development</h3>
+</div>
+<p style="font-size: var(--font-size-sm); color: var(--color-text-muted);">
+              Writing semantic, responsive, and standards-compliant client code with strict focus on WCAG AA accessibility standards.
+            </p>
+<ul aria-label="Web development skills" class="skill-pill-list">
+<li class="skill-pill">Semantic HTML5</li>
+<li class="skill-pill">CSS3 (Grid &amp; Flexbox)</li>
+<li class="skill-pill">Vanilla JavaScript (ES6+)</li>
+<li class="skill-pill">Responsive Design</li>
+<li class="skill-pill">WCAG 2.2 AA</li>
+<li class="skill-pill">DOM APIs</li>
+</ul>
+</div>
+<div class="skill-card">
+<div class="skill-category-header">
+<span aria-hidden="true" class="category-icon">⚙</span>
+<h3>Testing &amp; Quality Assurance</h3>
+</div>
+<p style="font-size: var(--font-size-sm); color: var(--color-text-muted);">
+              Automating integration, unit, and end-to-end regression suites to verify code contracts and endpoint latency thresholds.
+            </p>
+<ul aria-label="Testing and QA skills" class="skill-pill-list">
+<li class="skill-pill">Automated API Testing</li>
+<li class="skill-pill">Playwright</li>
+<li class="skill-pill">Jest / PyTest</li>
+<li class="skill-pill">Regression Suites</li>
+<li class="skill-pill">Postman / Newman</li>
+<li class="skill-pill">CI Test Pipelines</li>
+</ul>
+</div>
+<div class="skill-card">
+<div class="skill-category-header">
+<span aria-hidden="true" class="category-icon">☁</span>
+<h3>Cloud, DevOps &amp; Tools</h3>
+</div>
+<p style="font-size: var(--font-size-sm); color: var(--color-text-muted);">
+              Managing containerized microservices, container health monitoring, and version-controlled deployment pipelines.
+            </p>
+<ul aria-label="Cloud and DevOps skills" class="skill-pill-list">
+<li class="skill-pill">Docker Containers</li>
+<li class="skill-pill">Kubernetes Basics</li>
+<li class="skill-pill">Git &amp; GitHub Actions</li>
+<li class="skill-pill">Linux / Bash Scripting</li>
+<li class="skill-pill">AWS (S3, EC2, CloudFront)</li>
+<li class="skill-pill">RESTful API Design</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 4: Projects Section (Three Distinct Projects with Full Metadata) -->
+<section aria-labelledby="projects-heading" class="section-padding" id="projects">
+<div class="container">
+<h2 id="projects-heading">Featured Academic Projects</h2>
+<p style="max-width: 65ch; margin-bottom: var(--space-xl);">
+          Practical software implementations built to solve realistic system bottlenecks, automated testing workflows, and responsive commerce needs.
+        </p>
+<div class="projects-grid">
+<!-- Project 1: Cloud & Container Monitor -->
+<article aria-labelledby="project-1-title" class="project-card">
+<div class="project-image-container">
+<img alt="Cloud Infrastructure dashboard interface displaying CPU load charts, active nodes, and cluster health metrics" class="project-image" height="384" loading="lazy" src="https://lh3.googleusercontent.com/aida/AEtjO1WzSIwIsBWSJa3ZQa7XQW4T5EW0sKHZNqQ8RDx8Kbc_n4YZO0Rlms2T15pw5nGCYSePCa7tt0MXw9hEV7SRAlEfQ6z1WMvEht-j3jKhzsIqaj1KAP97fB3QPLfpHYVtPjI0czVFdjh4r9x9dJw11vpXm_vLojk4Qkpn-tsPtNAx03xFW5QcwGv6rsU-C1kpZ9Gnt9dbCZ7ct_w3pzVX32s37wbJr-WyUIP-JvqNdEw1T7am5Ot5n0QcFgg" width="688"/>
+</div>
+<div class="project-content">
+<ul aria-label="Technologies used in Project 1" class="project-tags">
+<li class="project-tag">Docker</li>
+<li class="project-tag">Node.js</li>
+<li class="project-tag">CSS Grid</li>
+<li class="project-tag">Prometheus API</li>
+</ul>
+<h3 id="project-1-title">Cloud Infrastructure &amp; Container Monitor</h3>
+<p class="project-description">
+                A lightweight telemetry dashboard visualizing node cluster availability, active Docker containers, and memory utilization thresholds across multi-cloud environments with automated alert triggers.
+              </p>
+<div class="project-links">
+<!-- External Link satisfying requirement -->
+<a aria-label="View Cloud Infrastructure Monitor source repository on GitHub (opens in new window)" class="project-link" href="https://github.com" rel="noopener noreferrer" target="_blank">
+<span>View Repository</span>
+<span aria-hidden="true" class="external-badge">↗</span>
+</a>
+<a aria-label="Inquire about Cloud Infrastructure Monitor case study" class="project-link" href="#contact">
+<span>Case Study Details →</span>
+</a>
+</div>
+</div>
+</article>
+<!-- Project 2: Automated Testing Platform -->
+<article aria-labelledby="project-2-title" class="project-card">
+<div class="project-image-container">
+<img alt="Automated API and Web Testing Suite dashboard showing 94.8% pass rate, latency graphs, and live test run logs" class="project-image" height="384" loading="lazy" src="https://lh3.googleusercontent.com/aida/AEtjO1UiVULIIvD7f6Z_ojg33dqk0pHKvycHsSn-l8H6qD6zxHXNgBabT1vimzXhnKuZPpefWGRmyBnr0dz_olu7R5HEWoH8OITUJ86-57xaceo391B1mI00TLHlpOmoyp5T31TJUbYuT-aUeoNmW5mVZikLMSetiYVl8BNa0kn6_NcD-CE5J4SAemhVbcRCuV77maaDOPIG0L_ymEWAD541wDp3WsVtjzOv5C6Rbx99eKYTAuj1ad6xbWLu10Q" width="688"/>
+</div>
+<div class="project-content">
+<ul aria-label="Technologies used in Project 2" class="project-tags">
+<li class="project-tag">Python</li>
+<li class="project-tag">REST APIs</li>
+<li class="project-tag">Playwright</li>
+<li class="project-tag">Semantic HTML5</li>
+</ul>
+<h3 id="project-2-title">Nexus Automated API &amp; Web Test Harness</h3>
+<p class="project-description">
+                An automated quality assurance dashboard monitoring endpoint regression suites, tracking pass-fail distributions, and logging live HTTP latency anomalies for continuous integration builds.
+              </p>
+<div class="project-links">
+<!-- External Link satisfying requirement -->
+<a aria-label="View Nexus Test Platform documentation on GitHub (opens in new window)" class="project-link" href="https://github.com" rel="noopener noreferrer" target="_blank">
+<span>View Documentation</span>
+<span aria-hidden="true" class="external-badge">↗</span>
+</a>
+<a aria-label="Inquire about Nexus Test Platform demo" class="project-link" href="#contact">
+<span>Schedule Demo →</span>
+</a>
+</div>
+</div>
+</article>
+<!-- Project 3: Responsive E-Commerce Platform -->
+<article aria-labelledby="project-3-title" class="project-card">
+<div class="project-image-container">
+<img alt="Clean modern e-commerce storefront with product grid, accessible filter sidebar, and responsive shopping cart panel" class="project-image" height="384" loading="lazy" src="https://lh3.googleusercontent.com/aida/AEtjO1W2CcV1aQ1s6Q_WtG7aIXxZNAVvW8f2QTuhdSftmyOdQtwmgZLrj1AhAmhc4S2ovmcxXHoTUxLMNdjXRnv1WEI5GFDjeuelUiDUcNAqomq9H8OpQSHjN8eaS8NzLNVDndkrdJneLmMKrMo9e3gzltOXXShgGYbZHr4Pw0sbK6YDFcZUAUooAeXB5TAKzvl2cy9pabbVxOvKAupbvaIhQKmPnR3WSUep-V2BjZHji-J2iPly4wyB8OEJsCU" width="688"/>
+</div>
+<div class="project-content">
+<ul aria-label="Technologies used in Project 3" class="project-tags">
+<li class="project-tag">CSS Flexbox</li>
+<li class="project-tag">Accessible Forms</li>
+<li class="project-tag">Vanilla JS</li>
+<li class="project-tag">WCAG 2.2 AA</li>
+</ul>
+<h3 id="project-3-title">Lumora Responsive Web Storefront</h3>
+<p class="project-description">
+                A fully responsive e-commerce catalog featuring real-time client-side price filtering, keyboard-accessible modal cart drawer, and high-contrast typography optimized for multi-device touch viewports.
+              </p>
+<div class="project-links">
+<!-- External Link satisfying requirement -->
+<a aria-label="Review W3C WCAG accessibility standards applied to Lumora project (opens in new window)" class="project-link" href="https://www.w3.org/WAI/standards-guidelines/wcag/" rel="noopener noreferrer" target="_blank">
+<span>Accessibility Audit</span>
+<span aria-hidden="true" class="external-badge">↗</span>
+</a>
+<a aria-label="Inquire about Lumora project architecture" class="project-link" href="#contact">
+<span>Architecture Notes →</span>
+</a>
+</div>
+</div>
+</article>
+</div>
+</div>
+</section>
+<!-- Section 5: Contact Section & Accessible Form -->
+<section aria-labelledby="contact-heading" class="section-padding contact-section" id="contact">
+<div class="container">
+<h2 id="contact-heading">Contact &amp; Professional Inquiries</h2>
+<p style="max-width: 65ch; margin-bottom: var(--space-xl);">
+          Interested in discussing internship opportunities, undergraduate research, or software testing methodologies? Feel free to reach out directly or send a message below.
+        </p>
+<div class="contact-layout">
+<!-- Contact Information Sub-panel -->
+<div class="contact-info-panel">
+<div class="contact-method-list">
+<div class="contact-method-item">
+<span class="contact-label">Academic Email</span>
+<a class="contact-value" href="mailto:alex.rivera.it@university.edu">alex.rivera.it@university.edu</a>
+</div>
+<div class="contact-method-item">
+<span class="contact-label">Campus Phone</span>
+<a class="contact-value" href="tel:+15550198342">+1 (555) 019-8342</a>
+</div>
+<div class="contact-method-item">
+<span class="contact-label">University Location</span>
+<span style="font-weight: 600; color: var(--color-text-main);">
+                  School of Computing, Room 402<br/>University Tech Quad, Suite B
+                </span>
+</div>
+<div class="contact-method-item">
+<span class="contact-label">Code Repository &amp; Network</span>
+<!-- External links -->
+<a class="contact-value" href="https://github.com" rel="noopener noreferrer" target="_blank">
+                  GitHub Profile <span aria-hidden="true" class="external-badge">↗</span>
+</a>
+</div>
+</div>
+<!-- Contextual Student Notice -->
+<div class="notice-box">
+<strong>Academic Portfolio Notice:</strong> This site was created for an HTML5 &amp; CSS3 university curriculum assignment. Form submission demonstrates semantic validation and client accessibility.
+            </div>
+</div>
+<!-- Contact Form with all required fields -->
+<div class="contact-form-card">
+<h3 style="font-size: 1.15rem; margin-bottom: var(--space-xs);">Send a Direct Message</h3>
+<p class="form-instruction">Fields marked with an asterisk (<span aria-hidden="true" class="required-marker">*</span>) are required.</p>
+<form action="#contact-success" id="portfolio-contact-form" method="post" novalidate="">
+<div class="form-grid">
+<!-- Name Field -->
+<div class="form-group">
+<label for="contact-name">Full Name <span aria-label="required" class="required-marker">*</span></label>
+<input aria-describedby="name-hint" autocomplete="name" id="contact-name" name="name" placeholder="e.g. Dr. Jane Doe" required="" type="text"/>
+<span class="field-hint" id="name-hint">Your first and last name</span>
+</div>
+<!-- Email Field -->
+<div class="form-group">
+<label for="contact-email">Email Address <span aria-label="required" class="required-marker">*</span></label>
+<input aria-describedby="email-hint" autocomplete="email" id="contact-email" name="email" placeholder="name@organization.com" required="" type="email"/>
+<span class="field-hint" id="email-hint">A valid reply email</span>
+</div>
+<!-- Website Field -->
+<div class="form-group">
+<label for="contact-website">Website or Portfolio URL</label>
+<input aria-describedby="website-hint" id="contact-website" name="website" placeholder="https://example.com" type="url"/>
+<span class="field-hint" id="website-hint">Optional corporate or personal website</span>
+</div>
+<!-- Telephone Number Field -->
+<div class="form-group">
+<label for="contact-phone">Telephone Number</label>
+<input aria-describedby="phone-hint" autocomplete="tel" id="contact-phone" name="phone" placeholder="(555) 000-0000" type="tel"/>
+<span class="field-hint" id="phone-hint">Optional phone number with area code</span>
+</div>
+<!-- Dropdown (<select>) -->
+<div class="form-group full-width">
+<label for="inquiry-type">Inquiry Topic <span aria-label="required" class="required-marker">*</span></label>
+<select id="inquiry-type" name="inquiry_type" required="">
+<option disabled="" selected="" value="">Please select a subject...</option>
+<option value="internship">Internship or Career Opportunity</option>
+<option value="academic">Academic Collaboration or Research</option>
+<option value="project">Inquiry Regarding Featured Projects</option>
+<option value="other">General Student Inquiry</option>
+</select>
+</div>
+<!-- Multiline Message Field (<textarea>) -->
+<div class="form-group full-width">
+<label for="contact-message">Message <span aria-label="required" class="required-marker">*</span></label>
+<textarea aria-describedby="message-hint" id="contact-message" name="message" placeholder="Please include details about the role, project, or topic..." required="" rows="5"></textarea>
+<span class="field-hint" id="message-hint">Minimum 20 characters recommended</span>
+</div>
+</div>
+<!-- Checkbox with Associated Label -->
+<div class="checkbox-container">
+<input id="consent-checkbox" name="consent" required="" type="checkbox"/>
+<label class="checkbox-label" for="consent-checkbox">
+                  I confirm that this message is related to student academic or career networking, and understand this form is part of an educational course portfolio demonstration. <span aria-label="required" class="required-marker">*</span>
+</label>
+</div>
+<!-- Submit Button -->
+<button class="btn btn-primary" style="width: 100%;" type="submit">
+                Submit Inquiry Message
+              </button>
+</form>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- ========================================================================
+       Footer Landmark (Semantic <footer>)
+       ======================================================================== -->
+<footer class="site-footer" role="contentinfo">
+<div class="container">
+<div class="footer-grid">
+<div>
+<div class="footer-brand-title">Alex Rivera • IT Portfolio</div>
+<p class="footer-desc">
+            Demonstrating structured semantic HTML5, pure CSS3 styling, responsive layouts, and WCAG 2.2 AA accessibility principles for IT coursework.
+          </p>
+</div>
+<div>
+<h3 class="footer-heading">Navigation</h3>
+<ul class="footer-links">
+<li><a class="footer-link" href="#home">Home / Top</a></li>
+<li><a class="footer-link" href="#about">About Alex</a></li>
+<li><a class="footer-link" href="#skills">Technical Skills</a></li>
+<li><a class="footer-link" href="#projects">Featured Projects</a></li>
+<li><a class="footer-link" href="#contact">Contact Information</a></li>
+</ul>
+</div>
+<div>
+<h3 class="footer-heading">Standards &amp; Resources</h3>
+<ul class="footer-links">
+<li>
+<!-- External Link -->
+<a class="footer-link" href="https://www.w3.org/WAI/" rel="noopener noreferrer" target="_blank">
+                W3C Web Accessibility <span aria-hidden="true" class="external-badge">↗</span>
+</a>
+</li>
+<li>
+<a class="footer-link" href="https://developer.mozilla.org/en-US/docs/Web/HTML" rel="noopener noreferrer" target="_blank">
+                MDN HTML5 Guide <span aria-hidden="true" class="external-badge">↗</span>
+</a>
+</li>
+<li>
+<a class="footer-link" href="https://github.com" rel="noopener noreferrer" target="_blank">
+                GitHub Repository <span aria-hidden="true" class="external-badge">↗</span>
+</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<p>© 2025 Alex Rivera. Built with semantic HTML5 &amp; CSS3. All rights reserved.</p>
+<p>Targeting WCAG 2.2 Level AA compliance • Zero external frameworks</p>
+</div>
+</div>
+</footer>
+<!-- ========================================================================
+       Vanilla JavaScript: Dark Mode & Theme Persistence Logic
+       ======================================================================== -->
+<script>
+    (function () {
+      const toggleBtn = document.getElementById('theme-toggle');
+      if (!toggleBtn) return;
+
+      const storageKey = 'alex-rivera-theme-preference';
+
+      function getPreferredTheme() {
+        const stored = localStorage.getItem(storageKey);
+        if (stored === 'dark' || stored === 'light') {
+          return stored;
+        }
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+
+      function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        const isDark = theme === 'dark';
+        toggleBtn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+        toggleBtn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+        toggleBtn.setAttribute('title', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+      }
+
+      // Initialize based on saved preference or system mode
+      const initialTheme = getPreferredTheme();
+      applyTheme(initialTheme);
+
+      // Handle user toggle click
+      toggleBtn.addEventListener('click', function () {
+        const currentTheme = document.documentElement.getAttribute('data-theme') || getPreferredTheme();
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        applyTheme(newTheme);
+        localStorage.setItem(storageKey, newTheme);
+      });
+
+      // Synchronize dynamically if user updates OS preference and hasn't explicitly set in site
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+        if (!localStorage.getItem(storageKey)) {
+          applyTheme(e.matches ? 'dark' : 'light');
+        }
+      });
+    })();
+  </script>
+</body></html>
